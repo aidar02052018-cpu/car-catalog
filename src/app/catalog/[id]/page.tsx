@@ -16,6 +16,7 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SiteHeader } from "@/components/site-header";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion-primitives";
 import { cn } from "@/lib/utils";
 import {
   BODY_LABELS,
@@ -115,11 +116,11 @@ export default async function CarDetailPage({
             </p>
           </div>
 
-          <div className="mt-12 divide-y divide-white/10 border-y border-white/10 lg:grid lg:grid-cols-3 lg:divide-x lg:divide-y-0 lg:border-x">
+          <Stagger className="mt-12 divide-y divide-white/10 border-y border-white/10 lg:grid lg:grid-cols-3 lg:divide-x lg:divide-y-0 lg:border-x">
             {specs.map((s) => {
               const Icon = s.icon;
               return (
-                <div
+                <StaggerItem
                   key={s.label}
                   className="group flex items-center gap-6 px-2 py-6 lg:flex-col lg:items-start lg:gap-4 lg:px-8 lg:py-10"
                 >
@@ -135,28 +136,36 @@ export default async function CarDetailPage({
                       {s.value}
                     </p>
                   </div>
-                </div>
+                </StaggerItem>
               );
             })}
-          </div>
+          </Stagger>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20">
-        <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
-          Комплектация
-        </p>
-        <h2 className="font-heading text-3xl font-medium tracking-tight md:text-4xl">
-          Что входит в базовую версию
-        </h2>
-        <ul className="mt-10 grid gap-x-10 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Reveal>
+          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+            Комплектация
+          </p>
+          <h2 className="font-heading text-3xl font-medium tracking-tight md:text-4xl">
+            Что входит в базовую версию
+          </h2>
+        </Reveal>
+        <Stagger
+          className="mt-10 grid gap-x-10 gap-y-4 sm:grid-cols-2 lg:grid-cols-3"
+          staggerChildren={0.04}
+        >
           {car.features.map((f) => (
-            <li key={f} className="flex items-start gap-3 text-sm text-zinc-700">
+            <StaggerItem
+              key={f}
+              className="flex items-start gap-3 text-sm text-zinc-700"
+            >
               <Check className="mt-0.5 h-4 w-4 shrink-0 text-zinc-900" />
               <span>{f}</span>
-            </li>
+            </StaggerItem>
           ))}
-        </ul>
+        </Stagger>
       </section>
 
       {similar.length > 0 && (
@@ -205,7 +214,7 @@ export default async function CarDetailPage({
       )}
 
       <section className="bg-zinc-950 text-white">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-16 text-center lg:px-10 lg:py-20">
+        <Reveal className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-16 text-center lg:px-10 lg:py-20">
           <h2 className="font-heading text-3xl font-medium tracking-tight md:text-4xl">
             Готовы к тест-драйву?
           </h2>
@@ -230,7 +239,7 @@ export default async function CarDetailPage({
               Смотреть другие модели
             </Link>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <footer className="border-t border-zinc-800 bg-zinc-950 text-white/60">

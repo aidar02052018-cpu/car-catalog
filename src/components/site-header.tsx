@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { Car, Menu, X } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -94,53 +95,81 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
         </div>
       </header>
 
-      {open && (
-        <div className="fixed inset-0 z-[100] flex flex-col bg-white p-6 md:hidden">
-          <div className="flex h-10 items-center justify-between">
-            <div className="flex items-center gap-2 text-zinc-900">
-              <Car className="h-5 w-5" strokeWidth={1.5} />
-              <span className="text-base font-medium tracking-[0.2em]">АВТОДОМ</span>
-            </div>
-            <button
-              type="button"
-              aria-label="Закрыть меню"
-              onClick={() => setOpen(false)}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200"
-            >
-              <X className="h-5 w-5" strokeWidth={1.5} />
-            </button>
-          </div>
-
-          <nav className="mt-12 flex flex-col gap-1">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[100] flex flex-col bg-white p-6 md:hidden"
+          >
+            <div className="flex h-10 items-center justify-between">
+              <div className="flex items-center gap-2 text-zinc-900">
+                <Car className="h-5 w-5" strokeWidth={1.5} />
+                <span className="text-base font-medium tracking-[0.2em]">АВТОДОМ</span>
+              </div>
+              <button
+                type="button"
+                aria-label="Закрыть меню"
                 onClick={() => setOpen(false)}
-                className="font-heading text-3xl text-zinc-900 transition hover:text-zinc-500"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200"
               >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+                <X className="h-5 w-5" strokeWidth={1.5} />
+              </button>
+            </div>
 
-          <div className="mt-auto">
-            <Link
-              href="/#contact"
-              onClick={() => setOpen(false)}
-              className={cn(
-                buttonVariants({ size: "lg" }),
-                "h-12 w-full rounded-full",
-              )}
+            <motion.nav
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: { transition: { delayChildren: 0.15, staggerChildren: 0.06 } },
+              }}
+              className="mt-12 flex flex-col gap-1"
             >
-              Записаться
-            </Link>
-            <p className="mt-4 text-center text-xs text-zinc-500">
-              +7 (495) 123-45-67 · hello@avtodom.ru
-            </p>
-          </div>
-        </div>
-      )}
+              {NAV_LINKS.map((link) => (
+                <motion.div
+                  key={link.href}
+                  variants={{
+                    hidden: { opacity: 0, x: 20 },
+                    visible: { opacity: 1, x: 0, transition: { duration: 0.4 } },
+                  }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="font-heading text-3xl text-zinc-900 transition hover:text-zinc-500"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.nav>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.4 }}
+              className="mt-auto"
+            >
+              <Link
+                href="/#contact"
+                onClick={() => setOpen(false)}
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "h-12 w-full rounded-full",
+                )}
+              >
+                Записаться
+              </Link>
+              <p className="mt-4 text-center text-xs text-zinc-500">
+                +7 (495) 123-45-67 · hello@avtodom.ru
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

@@ -28,6 +28,7 @@ import {
 } from "@/lib/configurator";
 import { supabase, type LeadKind } from "@/lib/supabase";
 import { isPhoneComplete, PhoneInput, toE164 } from "@/components/phone-input";
+import { AnimatedPrice } from "@/components/motion-primitives";
 
 type PaymentMode = "cash" | "credit";
 type SubmitState =
@@ -329,7 +330,7 @@ export function PriceCalculator({ car }: { car: Car }) {
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-white/60">
               Итого к оплате
             </p>
-            <p className="mt-1 font-heading text-4xl font-medium">{formatPrice(total)}</p>
+            <AnimatedPrice value={total} className="mt-1 block font-heading text-4xl font-medium" />
             <p className="mt-2 text-xs text-white/50">
               Без скрытых платежей. Цена фиксируется в договоре.
             </p>
@@ -339,9 +340,7 @@ export function PriceCalculator({ car }: { car: Car }) {
             <p className="text-xs font-medium uppercase tracking-[0.15em] text-white/60">
               Платёж в месяц
             </p>
-            <p className="mt-1 font-heading text-4xl font-medium">
-              {formatPrice(monthly)}
-            </p>
+            <AnimatedPrice value={monthly} className="mt-1 block font-heading text-4xl font-medium" />
             <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-xs text-white/60">
               <span>Итого: {formatPrice(total)}</span>
               <span>Взнос: {formatPrice(downAmount)}</span>

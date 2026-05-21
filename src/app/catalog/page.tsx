@@ -10,6 +10,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SiteHeader } from "@/components/site-header";
+import { Reveal } from "@/components/motion-primitives";
+import { motion } from "motion/react";
 import {
   Select,
   SelectContent,
@@ -88,15 +90,17 @@ export default function CatalogPage() {
 
       <section className="border-b border-zinc-200 bg-stone-50">
         <div className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
-            Каталог
-          </p>
-          <h1 className="font-heading text-4xl font-medium tracking-tight md:text-5xl">
-            Все модели в наличии
-          </h1>
-          <p className="mt-4 max-w-xl text-zinc-600">
-            {cars.length} автомобилей. Цены — финальные, без скрытых платежей и звонков.
-          </p>
+          <Reveal>
+            <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+              Каталог
+            </p>
+            <h1 className="font-heading text-4xl font-medium tracking-tight md:text-5xl">
+              Все модели в наличии
+            </h1>
+            <p className="mt-4 max-w-xl text-zinc-600">
+              {cars.length} автомобилей. Цены — финальные, без скрытых платежей и звонков.
+            </p>
+          </Reveal>
         </div>
       </section>
 
@@ -251,9 +255,16 @@ export default function CatalogPage() {
                 </Button>
               </div>
             ) : (
-              <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+              <motion.div layout className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
                 {filtered.map((car) => (
-                  <Link key={car.id} href={`/catalog/${car.id}`}>
+                  <motion.div
+                    key={car.id}
+                    layout
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                  <Link href={`/catalog/${car.id}`}>
                     <Card className="group h-full overflow-hidden border-zinc-200/70 bg-white py-0 shadow-none transition hover:shadow-xl">
                       <div className="relative h-52 overflow-hidden bg-zinc-100">
                         <div
@@ -287,8 +298,9 @@ export default function CatalogPage() {
                       </CardContent>
                     </Card>
                   </Link>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             )}
           </div>
         </div>
