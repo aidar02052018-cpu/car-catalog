@@ -13,8 +13,9 @@ import {
   Zap,
 } from "lucide-react";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { SiteHeader } from "@/components/site-header";
 import { cn } from "@/lib/utils";
 import {
   BODY_LABELS,
@@ -57,21 +58,7 @@ export default async function CarDetailPage({
 
   return (
     <div className="min-h-screen bg-white text-zinc-900">
-      <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
-          <Link href="/" className="flex items-center gap-2">
-            <CarIcon className="h-5 w-5" strokeWidth={1.5} />
-            <span className="text-base font-medium tracking-[0.2em]">АВТОДОМ</span>
-          </Link>
-          <nav className="hidden gap-10 text-sm font-medium text-zinc-600 md:flex">
-            <Link href="/" className="hover:text-zinc-900">Главная</Link>
-            <Link href="/catalog" className="hover:text-zinc-900">Каталог</Link>
-            <Link href="/#advantages" className="hover:text-zinc-900">Преимущества</Link>
-            <Link href="/#contact" className="hover:text-zinc-900">Контакты</Link>
-          </nav>
-          <Button size="sm" variant="outline">Записаться</Button>
-        </div>
-      </header>
+      <SiteHeader />
 
       <div className="mx-auto max-w-7xl px-6 pt-8 lg:px-10">
         <Link
@@ -112,27 +99,42 @@ export default async function CarDetailPage({
         </div>
       </section>
 
-      <section className="border-t border-zinc-200 bg-stone-50">
-        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20">
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
-            Характеристики
-          </p>
-          <h2 className="font-heading text-3xl font-medium tracking-tight md:text-4xl">
-            Технические данные
-          </h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="border-t border-zinc-200 bg-zinc-950 text-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-white/50">
+                Характеристики
+              </p>
+              <h2 className="font-heading text-3xl font-medium tracking-tight md:text-5xl">
+                Технические <span className="italic text-white/60">данные</span>
+              </h2>
+            </div>
+            <p className="max-w-sm text-sm text-white/60">
+              Базовые параметры комплектации. Полный лист характеристик придёт после заявки на тест-драйв.
+            </p>
+          </div>
+
+          <div className="mt-12 divide-y divide-white/10 border-y border-white/10 lg:grid lg:grid-cols-3 lg:divide-x lg:divide-y-0 lg:border-x">
             {specs.map((s) => {
               const Icon = s.icon;
               return (
                 <div
                   key={s.label}
-                  className="rounded-2xl border border-zinc-200 bg-white p-6"
+                  className="group flex items-center gap-6 px-2 py-6 lg:flex-col lg:items-start lg:gap-4 lg:px-8 lg:py-10"
                 >
-                  <Icon className="h-6 w-6 text-zinc-900" strokeWidth={1.25} />
-                  <p className="mt-4 text-xs uppercase tracking-[0.15em] text-zinc-500">
-                    {s.label}
-                  </p>
-                  <p className="mt-1 font-heading text-2xl font-medium">{s.value}</p>
+                  <Icon
+                    className="h-7 w-7 shrink-0 text-white/60 transition group-hover:text-white"
+                    strokeWidth={1.25}
+                  />
+                  <div className="flex-1 lg:w-full">
+                    <p className="text-xs uppercase tracking-[0.15em] text-white/50">
+                      {s.label}
+                    </p>
+                    <p className="mt-1 font-heading text-3xl font-medium md:text-4xl">
+                      {s.value}
+                    </p>
+                  </div>
                 </div>
               );
             })}

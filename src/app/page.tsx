@@ -1,9 +1,10 @@
 import Link from "next/link";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { ContactForm } from "@/components/contact-form";
+import { SiteHeader } from "@/components/site-header";
 import { BODY_LABELS, cars, formatPrice } from "@/lib/cars";
 import {
   ArrowUpRight,
@@ -38,27 +39,7 @@ const advantages = [
 export default function Home() {
   return (
     <div className="min-h-screen bg-white text-zinc-900">
-      <header className="absolute inset-x-0 top-0 z-50">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
-          <div className="flex items-center gap-2 text-white">
-            <Car className="h-5 w-5" strokeWidth={1.5} />
-            <span className="text-lg font-medium tracking-[0.2em]">АВТОДОМ</span>
-          </div>
-          <nav className="hidden gap-10 text-sm font-medium text-white/80 md:flex">
-            <Link href="/catalog" className="transition hover:text-white">Каталог</Link>
-            <a href="#advantages" className="transition hover:text-white">Преимущества</a>
-            <a href="#calculator" className="transition hover:text-white">Калькулятор</a>
-            <a href="#contact" className="transition hover:text-white">Контакты</a>
-          </nav>
-          <Button
-            size="sm"
-            variant="outline"
-            className="border-white/30 bg-white/0 text-white hover:bg-white hover:text-zinc-900"
-          >
-            Записаться
-          </Button>
-        </div>
-      </header>
+      <SiteHeader variant="transparent" />
 
       <section className="relative isolate min-h-[100svh] overflow-hidden bg-zinc-950 text-white">
         <div
@@ -96,14 +77,16 @@ export default function Home() {
                 Смотреть каталог
                 <ArrowUpRight className="ml-1 h-4 w-4" />
               </Link>
-              <Button
-                size="lg"
-                variant="ghost"
-                className="h-12 rounded-full px-7 text-white hover:bg-white/10 hover:text-white"
+              <Link
+                href="#contact"
+                className={cn(
+                  buttonVariants({ size: "lg", variant: "outline" }),
+                  "h-12 rounded-full border-white/30 bg-transparent px-7 text-white hover:bg-white hover:text-zinc-900",
+                )}
               >
                 <Phone className="mr-2 h-4 w-4" />
                 Заказать звонок
-              </Button>
+              </Link>
             </div>
           </div>
 

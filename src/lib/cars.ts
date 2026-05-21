@@ -241,7 +241,7 @@ export const cars: Car[] = [
     transmission: "manual",
     price: 2790000,
     year: 2024,
-    image: "https://images.unsplash.com/photo-1610917040803-1fccf9623064?auto=format&fit=crop&w=1600&q=80",
+    image: "https://images.unsplash.com/photo-1612825173281-9a193378527e?auto=format&fit=crop&w=1600&q=80",
     engine: "2.5 V6",
     power: 197,
     acceleration: 10.2,

@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SiteHeader } from "@/components/site-header";
 import {
   Select,
   SelectContent,
@@ -83,21 +84,7 @@ export default function CatalogPage() {
 
   return (
     <div className="min-h-screen bg-white text-zinc-900">
-      <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/90 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
-          <Link href="/" className="flex items-center gap-2">
-            <Car className="h-5 w-5" strokeWidth={1.5} />
-            <span className="text-base font-medium tracking-[0.2em]">АВТОДОМ</span>
-          </Link>
-          <nav className="hidden gap-10 text-sm font-medium text-zinc-600 md:flex">
-            <Link href="/" className="hover:text-zinc-900">Главная</Link>
-            <Link href="/catalog" className="text-zinc-900">Каталог</Link>
-            <Link href="/#advantages" className="hover:text-zinc-900">Преимущества</Link>
-            <Link href="/#contact" className="hover:text-zinc-900">Контакты</Link>
-          </nav>
-          <Button size="sm" variant="outline">Записаться</Button>
-        </div>
-      </header>
+      <SiteHeader />
 
       <section className="border-b border-zinc-200 bg-stone-50">
         <div className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
