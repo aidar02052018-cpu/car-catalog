@@ -71,10 +71,7 @@ export default function Home() {
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Link
                 href="/catalog"
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "h-12 rounded-full bg-white px-7 text-zinc-900 hover:bg-zinc-200",
-                )}
+                className="inline-flex h-12 items-center justify-center gap-1 rounded-full bg-white px-7 text-sm font-medium text-zinc-900 transition hover:bg-zinc-200"
               >
                 Смотреть каталог
                 <ArrowUpRight className="ml-1 h-4 w-4" />
@@ -177,10 +174,7 @@ export default function Home() {
               </ul>
               <Link
                 href="/catalog/bmw-x5"
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "mt-10 h-12 rounded-full bg-white px-7 text-zinc-900 hover:bg-zinc-200",
-                )}
+                className="mt-10 inline-flex h-12 items-center justify-center gap-1 rounded-full bg-white px-7 text-sm font-medium text-zinc-900 transition hover:bg-zinc-200"
               >
                 Открыть калькулятор
                 <ArrowUpRight className="ml-1 h-4 w-4" />
