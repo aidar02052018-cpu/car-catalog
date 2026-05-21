@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SiteHeader } from "@/components/site-header";
+import { CompareButton } from "@/components/compare-button";
 import { Reveal } from "@/components/motion-primitives";
 import { motion } from "motion/react";
 import {
@@ -271,8 +272,11 @@ export default function CatalogPage() {
                           className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-105"
                           style={{ backgroundImage: `url('${car.image}')` }}
                         />
-                        <div className="absolute right-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-xs font-medium text-zinc-700 backdrop-blur">
-                          {car.year}
+                        <div className="absolute right-3 top-3 flex items-center gap-2">
+                          <CompareButton carId={car.id} />
+                          <span className="rounded-full bg-white/95 px-2.5 py-1 text-xs font-medium text-zinc-700 backdrop-blur">
+                            {car.year}
+                          </span>
                         </div>
                       </div>
                       <CardContent className="space-y-4 p-6">

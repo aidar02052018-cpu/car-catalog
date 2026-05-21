@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { CompareButton } from "@/components/compare-button";
 import { ContactForm } from "@/components/contact-form";
 import { HeroSection } from "@/components/hero-section";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion-primitives";
@@ -152,8 +153,11 @@ export default function Home() {
                         className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-105"
                         style={{ backgroundImage: `url('${m.image}')` }}
                       />
-                      <div className="absolute right-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-xs font-medium text-zinc-700 backdrop-blur">
-                        {m.year}
+                      <div className="absolute right-3 top-3 flex items-center gap-2">
+                        <CompareButton carId={m.id} />
+                        <span className="rounded-full bg-white/95 px-2.5 py-1 text-xs font-medium text-zinc-700 backdrop-blur">
+                          {m.year}
+                        </span>
                       </div>
                     </div>
                     <CardContent className="space-y-2 p-6">
