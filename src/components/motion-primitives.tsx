@@ -24,7 +24,7 @@ const fadeUp: Variants = {
   },
 };
 
-const VIEWPORT = { once: true, amount: 0.1 } as const;
+const VIEWPORT = { once: true, amount: "some", margin: "0px 0px -80px 0px" } as const;
 
 export function Reveal({
   children,
