@@ -12,7 +12,7 @@ type Variant = "transparent" | "solid";
 const NAV_LINKS = [
   { href: "/catalog", label: "Каталог" },
   { href: "/#advantages", label: "Преимущества" },
-  { href: "/catalog/voyager-x", label: "Конфигуратор" },
+  { href: "/catalog/bmw-x5", label: "Конфигуратор" },
   { href: "/#contact", label: "Контакты" },
 ];
 

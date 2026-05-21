@@ -11,9 +11,11 @@ import {
   BadgeCheck,
   Calculator,
   Car,
+  Check,
   Phone,
   ShieldCheck,
   Sparkles,
+  X,
 } from "lucide-react";
 
 const featured = cars.slice(0, 4);
@@ -96,8 +98,8 @@ export default function Home() {
               <div className="mt-1 text-white/60">лет на рынке</div>
             </div>
             <div>
-              <div className="font-heading text-3xl font-medium">38</div>
-              <div className="mt-1 text-white/60">брендов в каталоге</div>
+              <div className="font-heading text-3xl font-medium">50</div>
+              <div className="mt-1 text-white/60">моделей в наличии</div>
             </div>
             <div>
               <div className="font-heading text-3xl font-medium">24 700</div>
@@ -106,6 +108,83 @@ export default function Home() {
             <div>
               <div className="font-heading text-3xl font-medium">15 мин</div>
               <div className="mt-1 text-white/60">до перезвона менеджера</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white">
+        <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
+          <p className="mb-4 text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+            Наше отличие
+          </p>
+          <h2 className="font-heading max-w-3xl text-4xl font-medium leading-[1.05] tracking-tight md:text-6xl">
+            Цена в каталоге — <br />
+            <span className="italic text-zinc-500">
+              финальная цена в кассе
+            </span>
+          </h2>
+          <p className="mt-8 max-w-xl text-lg leading-relaxed text-zinc-600">
+            80% дилеров пишут «от 3 290 000 ₽» и просят перезвонить. Мы
+            показываем все доплаты в калькуляторе — клиент видит итог до
+            визита в салон.
+          </p>
+
+          <div className="mt-16 grid gap-px overflow-hidden rounded-3xl bg-zinc-200 md:grid-cols-2">
+            <div className="bg-stone-50 p-8 md:p-12">
+              <p className="text-xs font-medium uppercase tracking-[0.15em] text-zinc-500">
+                У других
+              </p>
+              <ul className="mt-8 space-y-5">
+                {[
+                  '«Цена от» — итог узнаёте в салоне',
+                  'КАСКО — «обсудим при оформлении»',
+                  '«Ставку кредита уточняйте у менеджера»',
+                  'Допы — продают «пакетами» без разбивки',
+                  'Финальный чек на 15-25% выше прайса',
+                ].map((text) => (
+                  <li
+                    key={text}
+                    className="flex items-start gap-3 text-zinc-600"
+                  >
+                    <X className="mt-0.5 h-5 w-5 shrink-0 text-zinc-400" strokeWidth={1.5} />
+                    <span>{text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="bg-zinc-950 p-8 text-white md:p-12">
+              <p className="text-xs font-medium uppercase tracking-[0.15em] text-white/60">
+                У нас
+              </p>
+              <ul className="mt-8 space-y-5">
+                {[
+                  'Финальная цена с базовой комплектацией — в карточке',
+                  'КАСКО на год — отдельной строкой, +95 000 ₽',
+                  'Кредит со ставкой 12% годовых, расчёт онлайн',
+                  'Каждая опция — отдельной галочкой с ценой',
+                  'Сколько в калькуляторе — столько в кассе',
+                ].map((text) => (
+                  <li
+                    key={text}
+                    className="flex items-start gap-3"
+                  >
+                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-white" strokeWidth={2} />
+                    <span>{text}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/catalog/bmw-x5"
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "mt-10 h-12 rounded-full bg-white px-7 text-zinc-900 hover:bg-zinc-200",
+                )}
+              >
+                Открыть калькулятор
+                <ArrowUpRight className="ml-1 h-4 w-4" />
+              </Link>
             </div>
           </div>
         </div>
