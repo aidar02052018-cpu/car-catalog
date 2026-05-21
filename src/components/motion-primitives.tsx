@@ -24,25 +24,22 @@ const fadeUp: Variants = {
   },
 };
 
+const VIEWPORT = { once: true, amount: 0.1 } as const;
+
 export function Reveal({
   children,
   className,
   delay = 0,
-  amount = 0.2,
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  amount?: number;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount });
-
   return (
     <motion.div
-      ref={ref}
       initial="hidden"
-      animate={inView ? "visible" : "hidden"}
+      whileInView="visible"
+      viewport={VIEWPORT}
       variants={fadeUp}
       transition={{ delay, duration: 0.7, ease: easeOut }}
       className={className}
@@ -57,22 +54,17 @@ export function Stagger({
   className,
   delayChildren = 0.1,
   staggerChildren = 0.08,
-  amount = 0.2,
 }: {
   children: React.ReactNode;
   className?: string;
   delayChildren?: number;
   staggerChildren?: number;
-  amount?: number;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount });
-
   return (
     <motion.div
-      ref={ref}
       initial="hidden"
-      animate={inView ? "visible" : "hidden"}
+      whileInView="visible"
+      viewport={VIEWPORT}
       variants={{
         hidden: {},
         visible: {
