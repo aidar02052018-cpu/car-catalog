@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Car, Menu, X } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
+import { UserMenu } from "@/components/user-menu";
 import { cn } from "@/lib/utils";
 
 type Variant = "transparent" | "solid";
@@ -70,13 +71,17 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
               href="/#contact"
               className={cn(
                 buttonVariants({ size: "sm", variant: "outline" }),
-                "hidden h-9 rounded-full px-4 md:inline-flex",
+                "hidden h-9 rounded-full px-4 lg:inline-flex",
                 isTransparent &&
                   "border-white/30 bg-transparent text-white hover:bg-white hover:text-zinc-900",
               )}
             >
               Записаться
             </Link>
+
+            <div className="hidden md:block">
+              <UserMenu variant={isTransparent ? "transparent" : "solid"} />
+            </div>
 
             <button
               type="button"

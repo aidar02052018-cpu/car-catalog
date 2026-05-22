@@ -16,6 +16,7 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CompareButton } from "@/components/compare-button";
+import { FavoriteButton } from "@/components/favorite-button";
 import { SiteHeader } from "@/components/site-header";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion-primitives";
 import { cn } from "@/lib/utils";
@@ -83,6 +84,7 @@ export default async function CarDetailPage({
                 style={{ backgroundImage: `url('${car.image}')` }}
               />
               <div className="absolute right-4 top-4 flex items-center gap-2">
+                <FavoriteButton carId={car.id} />
                 <CompareButton carId={car.id} />
                 <span className="rounded-full bg-white/95 px-3 py-1.5 text-xs font-medium text-zinc-700 backdrop-blur">
                   {car.year} · в наличии
@@ -207,7 +209,8 @@ export default async function CarDetailPage({
                         className="absolute inset-0 bg-cover bg-center transition duration-500 group-hover:scale-105"
                         style={{ backgroundImage: `url('${s.image}')` }}
                       />
-                      <div className="absolute right-3 top-3">
+                      <div className="absolute right-3 top-3 flex items-center gap-2">
+                        <FavoriteButton carId={s.id} />
                         <CompareButton carId={s.id} />
                       </div>
                     </div>
