@@ -13,7 +13,6 @@ type Variant = "transparent" | "solid";
 
 const NAV_LINKS = [
   { href: "/catalog", label: "Каталог" },
-  { href: "/compare", label: "Сравнение" },
   { href: "/#advantages", label: "Преимущества" },
   { href: "/#contact", label: "Контакты" },
 ];

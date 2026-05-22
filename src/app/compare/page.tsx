@@ -49,19 +49,23 @@ function CompareContent() {
   const compare = useCompare();
 
   const idsParam = searchParams.get("ids") ?? "";
-  const ids = useMemo(
-    () => idsParam.split(",").filter(Boolean),
-    [idsParam],
-  );
+
+  // URL — источник правды, если он есть. Иначе берём из контекста (localStorage)
+  const ids = useMemo(() => {
+    const fromUrl = idsParam.split(",").filter(Boolean);
+    if (fromUrl.length > 0) return fromUrl;
+    return compare.ids;
+  }, [idsParam, compare.ids]);
 
   useEffect(() => {
-    if (ids.length === 0) return;
+    const fromUrl = idsParam.split(",").filter(Boolean);
+    if (fromUrl.length === 0) return;
     const same =
-      ids.length === compare.ids.length &&
-      ids.every((id, i) => compare.ids[i] === id);
+      fromUrl.length === compare.ids.length &&
+      fromUrl.every((id, i) => compare.ids[i] === id);
     if (!same) {
       compare.clear();
-      ids.forEach((id) => compare.add(id));
+      fromUrl.forEach((id) => compare.add(id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idsParam]);
