@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { Check, Mail, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,6 +21,28 @@ export function AuthModal({
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [showFallbackHint, setShowFallbackHint] = useState(false);
+
+  // Локаем скролл когда модалка открыта
+  useEffect(() => {
+    if (open) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+  }, [open]);
+
+  // Если запрос висит дольше 6 секунд — показать подсказку проверить почту
+  useEffect(() => {
+    if (status !== "sending") {
+      setShowFallbackHint(false);
+      return;
+    }
+    const timer = setTimeout(() => setShowFallbackHint(true), 6000);
+    return () => clearTimeout(timer);
+  }, [status]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -48,11 +70,11 @@ export function AuthModal({
 
   const handleClose = () => {
     onClose();
-    // Сбросить состояние когда модалка закроется
     setTimeout(() => {
       setStatus("idle");
       setEmail("");
       setErrorMsg("");
+      setShowFallbackHint(false);
     }, 300);
   };
 
@@ -64,7 +86,7 @@ export function AuthModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-zinc-950/85 p-4 backdrop-blur-md"
+          className="fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto bg-zinc-950 p-4"
           onClick={handleClose}
         >
           <motion.div
@@ -93,12 +115,12 @@ export function AuthModal({
                   Ссылка отправлена
                 </h2>
                 <p className="mt-3 text-zinc-600">
-                  Проверь почту {email} — там будет письмо с кнопкой «Войти».
-                  Кликни на неё, чтобы залогиниться.
+                  Проверь почту <strong>{email}</strong> — там будет письмо с
+                  кнопкой «Войти». Кликни на неё, чтобы залогиниться.
                 </p>
                 <p className="mt-6 text-xs text-zinc-500">
-                  Письмо может прийти в течение минуты. Если не пришло —
-                  проверь папку «Спам».
+                  Письмо приходит в течение минуты. Если не нашёл — проверь
+                  папку «Спам».
                 </p>
               </div>
             ) : (
@@ -131,9 +153,25 @@ export function AuthModal({
 
                   {status === "error" && (
                     <div className="rounded-xl bg-red-50 p-3 text-xs text-red-800">
-                      <p className="font-medium">Не удалось отправить: {errorMsg}</p>
+                      <p className="font-medium">
+                        Не удалось отправить: {errorMsg}
+                      </p>
                       <p className="mt-1.5 text-red-700">
-                        Если ошибка «Failed to fetch» — отключи блокировщик рекламы или антитрекер для этого сайта. Часто uBlock, Adblock или встроенный антитрекер Яндекс.Браузера режут запросы к supabase.co.
+                        Если ошибка «Failed to fetch» — браузер блокирует
+                        ответ от сервера. Отключи антитрекер для этого сайта
+                        или попробуй в режиме «Инкогнито».
+                      </p>
+                    </div>
+                  )}
+
+                  {showFallbackHint && status === "sending" && (
+                    <div className="rounded-xl bg-amber-50 p-3 text-xs text-amber-900">
+                      <p className="font-medium">Проверь почту</p>
+                      <p className="mt-1">
+                        Иногда форма «зависает» из-за блокировщиков, но письмо
+                        со ссылкой для входа всё равно приходит. Проверь
+                        входящие и «Спам» — если ссылка пришла, кликни её
+                        отсюда напрямую.
                       </p>
                     </div>
                   )}
