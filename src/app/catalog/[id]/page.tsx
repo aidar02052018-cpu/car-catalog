@@ -30,6 +30,7 @@ import {
 } from "@/lib/cars";
 import { PriceCalculator } from "./price-calculator";
 import { TCOCalculator } from "@/components/tco-calculator";
+import { VideoSection } from "@/components/video-section";
 
 export function generateStaticParams() {
   return cars.map((c) => ({ id: c.id }));
@@ -149,6 +150,8 @@ export default async function CarDetailPage({
       </section>
 
       <TCOCalculator car={car} />
+
+      <VideoSection car={car} />
 
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20">
         <Reveal>
