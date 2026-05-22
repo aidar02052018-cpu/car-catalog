@@ -64,7 +64,7 @@ export function AuthModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 p-4 backdrop-blur"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-zinc-950/85 p-4 backdrop-blur-md"
           onClick={handleClose}
         >
           <motion.div
@@ -130,7 +130,12 @@ export function AuthModal({
                   </div>
 
                   {status === "error" && (
-                    <p className="text-sm text-red-600">{errorMsg}</p>
+                    <div className="rounded-xl bg-red-50 p-3 text-xs text-red-800">
+                      <p className="font-medium">Не удалось отправить: {errorMsg}</p>
+                      <p className="mt-1.5 text-red-700">
+                        Если ошибка «Failed to fetch» — отключи блокировщик рекламы или антитрекер для этого сайта. Часто uBlock, Adblock или встроенный антитрекер Яндекс.Браузера режут запросы к supabase.co.
+                      </p>
+                    </div>
                   )}
 
                   <Button

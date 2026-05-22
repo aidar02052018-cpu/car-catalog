@@ -140,7 +140,7 @@ export default async function CarDetailPage({
                     <p className="text-xs uppercase tracking-[0.15em] text-white/50">
                       {s.label}
                     </p>
-                    <p className="mt-1 font-heading text-3xl font-medium md:text-4xl">
+                    <p className="mt-1 text-2xl font-medium tracking-tight md:text-3xl">
                       {s.value}
                     </p>
                   </div>
