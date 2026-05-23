@@ -9,8 +9,8 @@ export type ColorOption = Option & { hex: string };
 
 export const TRIMS: Option[] = [
   { id: "base", label: "Базовая", price: 0, description: "Стандартная комплектация" },
-  { id: "comfort", label: "Комфорт", price: 250000, description: "Кожа, климат, навигация" },
-  { id: "premium", label: "Премиум", price: 550000, description: "Полный пакет + ассистенты" },
+  { id: "comfort", label: "Комфорт", price: 250000, description: "Климат-контроль, навигация, парктроник" },
+  { id: "premium", label: "Премиум", price: 550000, description: "Полный пакет + ассистенты вождения" },
 ];
 
 export const COLORS: ColorOption[] = [
