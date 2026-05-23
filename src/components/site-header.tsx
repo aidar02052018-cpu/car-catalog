@@ -40,8 +40,8 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
             )}
           >
             <Car className="h-5 w-5" strokeWidth={1.5} />
-            <span className="text-base font-medium tracking-[0.2em] lg:text-lg">
-              АВТОДОМ
+            <span className="text-sm font-medium tracking-[0.15em] lg:text-base">
+              ПРАЙМ · ПРАЙС
             </span>
           </Link>
 
@@ -111,7 +111,7 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
             <div className="flex h-10 items-center justify-between">
               <div className="flex items-center gap-2 text-zinc-900">
                 <Car className="h-5 w-5" strokeWidth={1.5} />
-                <span className="text-base font-medium tracking-[0.2em]">АВТОДОМ</span>
+                <span className="text-sm font-medium tracking-[0.15em]">ПРАЙМ · ПРАЙС</span>
               </div>
               <button
                 type="button"
@@ -168,7 +168,7 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
                 Записаться
               </Link>
               <p className="mt-4 text-center text-xs text-zinc-500">
-                +7 (495) 123-45-67 · hello@avtodom.ru
+                +7 (495) 123-45-67 · hello@primeprice.ru
               </p>
             </motion.div>
           </motion.div>

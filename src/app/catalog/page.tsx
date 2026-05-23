@@ -316,9 +316,9 @@ export default function CatalogPage() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-10 text-sm text-zinc-500 md:flex-row lg:px-10">
           <div className="flex items-center gap-2">
             <Car className="h-4 w-4" strokeWidth={1.5} />
-            <span className="tracking-[0.2em]">АВТОДОМ</span>
+            <span className="tracking-[0.15em]">ПРАЙМ · ПРАЙС</span>
           </div>
-          <p>© 2026 АвтоДом. Учебный проект.</p>
+          <p>© 2026 Прайм Прайс. Учебный проект.</p>
         </div>
       </footer>
     </div>

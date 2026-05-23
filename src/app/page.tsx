@@ -223,7 +223,7 @@ export default function Home() {
                 </div>
                 <div className="flex items-baseline gap-6 border-t border-white/10 pt-5">
                   <dt className="w-20 shrink-0 text-white/50">Email</dt>
-                  <dd>hello@avtodom.ru</dd>
+                  <dd>hello@primeprice.ru</dd>
                 </div>
                 <div className="flex items-baseline gap-6 border-t border-white/10 pt-5">
                   <dt className="w-20 shrink-0 text-white/50">Адрес</dt>
@@ -243,9 +243,9 @@ export default function Home() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-10 text-sm md:flex-row lg:px-10">
           <div className="flex items-center gap-2">
             <Car className="h-4 w-4" strokeWidth={1.5} />
-            <span className="tracking-[0.2em]">АВТОДОМ</span>
+            <span className="tracking-[0.15em]">ПРАЙМ · ПРАЙС</span>
           </div>
-          <p>© 2026 АвтоДом. Учебный проект.</p>
+          <p>© 2026 Прайм Прайс. Учебный проект.</p>
         </div>
       </footer>
     </div>

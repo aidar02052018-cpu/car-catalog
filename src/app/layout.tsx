@@ -24,8 +24,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "АвтоДом — продажа автомобилей",
-  description: "Каталог новых автомобилей с прозрачными ценами и быстрым оформлением",
+  title: "Прайм Прайс — честные цены на автомобили",
+  description: "Каталог автомобилей с прозрачными ценами. Сумма в карточке = сумма в кассе. Без «уточняйте в салоне».",
 };
 
 export default function RootLayout({
