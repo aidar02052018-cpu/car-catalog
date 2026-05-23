@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useScroll,
+} from "motion/react";
 import { Car, Menu, X } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -19,24 +24,37 @@ const NAV_LINKS = [
 
 export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Отслеживаем прокрутку, чтобы менять стиль прозрачной шапки на плотный белый
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setScrolled(latest > 80);
+  });
+
   const isTransparent = variant === "transparent";
+  // Реально-прозрачный режим только пока пользователь у самого верха
+  const effectiveTransparent = isTransparent && !scrolled;
 
   return (
     <>
       <header
         className={cn(
-          "z-50",
-          isTransparent
-            ? "absolute inset-x-0 top-0"
-            : "sticky top-0 border-b border-zinc-200 bg-white/90 backdrop-blur",
+          "inset-x-0 top-0 z-50 transition-colors duration-300",
+          // На главной — fixed, чтобы шапка плавала над hero и оставалась при скролле.
+          // На внутренних страницах — sticky, чтобы не перекрывать контент.
+          isTransparent ? "fixed" : "sticky",
+          effectiveTransparent
+            ? "bg-transparent"
+            : "border-b border-zinc-200 bg-white/90 backdrop-blur",
         )}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:h-20 lg:px-10">
           <Link
             href="/"
             className={cn(
-              "flex items-center gap-2",
-              isTransparent ? "text-white" : "text-zinc-900",
+              "flex items-center gap-2 transition-colors",
+              effectiveTransparent ? "text-white" : "text-zinc-900",
             )}
           >
             <Car className="h-5 w-5" strokeWidth={1.5} />
@@ -47,8 +65,8 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
 
           <nav
             className={cn(
-              "hidden gap-10 text-sm font-medium md:flex",
-              isTransparent ? "text-white/80" : "text-zinc-600",
+              "hidden gap-10 text-sm font-medium transition-colors md:flex",
+              effectiveTransparent ? "text-white/80" : "text-zinc-600",
             )}
           >
             {NAV_LINKS.map((link) => (
@@ -56,8 +74,8 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "transition",
-                  isTransparent ? "hover:text-white" : "hover:text-zinc-900",
+                  "transition-colors",
+                  effectiveTransparent ? "hover:text-white" : "hover:text-zinc-900",
                 )}
               >
                 {link.label}
@@ -70,8 +88,8 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
               href="/#contact"
               className={cn(
                 buttonVariants({ size: "sm", variant: "outline" }),
-                "hidden h-9 rounded-full px-4 lg:inline-flex",
-                isTransparent &&
+                "hidden h-9 rounded-full px-4 transition-colors lg:inline-flex",
+                effectiveTransparent &&
                   "border-white/30 bg-transparent text-white hover:bg-white hover:text-zinc-900",
               )}
             >
@@ -79,7 +97,7 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
             </Link>
 
             <div className="hidden md:block">
-              <UserMenu variant={isTransparent ? "transparent" : "solid"} />
+              <UserMenu variant={effectiveTransparent ? "transparent" : "solid"} />
             </div>
 
             <button
@@ -87,8 +105,8 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
               aria-label="Открыть меню"
               onClick={() => setOpen(true)}
               className={cn(
-                "flex h-10 w-10 items-center justify-center rounded-full border md:hidden",
-                isTransparent
+                "flex h-10 w-10 items-center justify-center rounded-full border transition-colors md:hidden",
+                effectiveTransparent
                   ? "border-white/30 text-white"
                   : "border-zinc-200 text-zinc-900",
               )}
