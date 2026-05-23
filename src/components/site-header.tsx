@@ -28,17 +28,19 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
   const [open, setOpen] = useState(false);
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
 
-  // Плавная интерполяция: фон шапки и цвет текста меняются по мере прокрутки,
-  // не бинарно. Триггер запускается между 350 и 600 пикселями скролла.
+  // Плавная интерполяция: фон, бордюр и блюр шапки нарастают по мере прокрутки.
+  // Появляются только когда пользователь прошёл основной hero (~900-1500px).
   const { scrollY } = useScroll();
-  const bgAlpha = useTransform(scrollY, [350, 600], [0, 0.92]);
-  const borderAlpha = useTransform(scrollY, [350, 600], [0, 0.12]);
+  const bgAlpha = useTransform(scrollY, [900, 1500], [0, 0.92]);
+  const borderAlpha = useTransform(scrollY, [900, 1500], [0, 0.12]);
+  const blurAmount = useTransform(scrollY, [900, 1500], [0, 14]);
   const backgroundColor = useMotionTemplate`rgba(255, 255, 255, ${bgAlpha})`;
   const borderColor = useMotionTemplate`rgba(0, 0, 0, ${borderAlpha})`;
+  const backdropFilter = useMotionTemplate`blur(${blurAmount}px)`;
 
-  // Boolean — для смены цвета текста (rgb-интерполяция уродлива для текста)
+  // Boolean — для смены цвета текста (rgb-интерполяция в плавный фейд работает уродливо)
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolledPastHero(latest > 500);
+    setScrolledPastHero(latest > 1200);
   });
 
   const isTransparent = variant === "transparent";
@@ -49,12 +51,20 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
       <motion.header
         style={
           isTransparent
-            ? { backgroundColor, borderBottomColor: borderColor, borderBottomWidth: 1 }
+            ? {
+                backgroundColor,
+                borderBottomColor: borderColor,
+                borderBottomWidth: 1,
+                backdropFilter,
+                WebkitBackdropFilter: backdropFilter,
+              }
             : undefined
         }
         className={cn(
           "inset-x-0 top-0 z-50",
-          isTransparent ? "fixed backdrop-blur-md" : "sticky border-b border-zinc-200 bg-white/90 backdrop-blur",
+          isTransparent
+            ? "fixed"
+            : "sticky border-b border-zinc-200 bg-white/90 backdrop-blur",
         )}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:h-20 lg:px-10">
