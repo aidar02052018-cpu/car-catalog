@@ -86,7 +86,7 @@ export function AuthModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto bg-white/30 p-4 backdrop-blur-2xl"
+          className="fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto p-4"
           onClick={handleClose}
         >
           <motion.div
