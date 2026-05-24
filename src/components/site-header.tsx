@@ -10,16 +10,18 @@ import {
   useScroll,
   useTransform,
 } from "motion/react";
-import { Car, Menu, X } from "lucide-react";
+import { Car, Heart, Menu, X } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { UserMenu } from "@/components/user-menu";
+import { useFavorites } from "@/lib/use-favorites";
 import { cn } from "@/lib/utils";
 
 type Variant = "transparent" | "solid";
 
 const NAV_LINKS = [
   { href: "/catalog", label: "Каталог" },
+  { href: "/favorites", label: "Избранное" },
   { href: "/#advantages", label: "Преимущества" },
   { href: "/#contact", label: "Контакты" },
 ];
@@ -27,6 +29,7 @@ const NAV_LINKS = [
 export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
   const [open, setOpen] = useState(false);
   const [scrolledPastHero, setScrolledPastHero] = useState(false);
+  const { count: favoritesCount } = useFavorites();
 
   // Плавная интерполяция: фон, бордюр и блюр шапки нарастают по мере прокрутки.
   // Появляются только когда пользователь прошёл основной hero (~900-1500px).
@@ -113,6 +116,24 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
               )}
             >
               Записаться
+            </Link>
+
+            <Link
+              href="/favorites"
+              aria-label="Избранное"
+              className={cn(
+                "relative hidden h-10 w-10 items-center justify-center rounded-full border transition-colors duration-500 md:flex",
+                effectiveTransparent
+                  ? "border-white/30 text-white hover:bg-white hover:text-zinc-900"
+                  : "border-zinc-200 text-zinc-700 hover:bg-zinc-50",
+              )}
+            >
+              <Heart className="h-4 w-4" strokeWidth={1.75} />
+              {favoritesCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-semibold text-white">
+                  {favoritesCount}
+                </span>
+              )}
             </Link>
 
             <div className="hidden md:block">

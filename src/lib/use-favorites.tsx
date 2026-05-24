@@ -2,98 +2,63 @@
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
-import { supabase } from "@/lib/supabase";
-import { useAuth } from "@/lib/use-auth";
+const STORAGE_KEY = "primeprice-favorites";
 
 type FavoritesContextValue = {
   ids: string[];
-  loading: boolean;
   isFavorite: (carId: string) => boolean;
-  toggle: (carId: string) => Promise<void>;
-  remove: (carId: string) => Promise<void>;
+  toggle: (carId: string) => void;
+  remove: (carId: string) => void;
+  clear: () => void;
+  count: number;
 };
 
 const FavoritesContext = createContext<FavoritesContextValue | null>(null);
 
 export function FavoritesProvider({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth();
   const [ids, setIds] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
 
-  // Load favorites when user changes
   useEffect(() => {
-    if (!user) {
-      setIds([]);
-      return;
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) setIds(parsed);
+      }
+    } catch {
+      // ignore
     }
-    let cancelled = false;
-    setLoading(true);
-    supabase
-      .from("favorites")
-      .select("car_id")
-      .eq("user_id", user.id)
-      .then(({ data, error }) => {
-        if (cancelled) return;
-        if (error) {
-          console.warn("favorites load error:", error.message);
-          setIds([]);
-        } else {
-          setIds(data?.map((r) => r.car_id as string) ?? []);
-        }
-        setLoading(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [user]);
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+    } catch {
+      // ignore
+    }
+  }, [ids, hydrated]);
 
   const isFavorite = useCallback((carId: string) => ids.includes(carId), [ids]);
 
-  const toggle = useCallback(
-    async (carId: string) => {
-      if (!user) return;
-      const already = ids.includes(carId);
-      // Оптимистичное обновление UI
-      setIds((prev) =>
-        already ? prev.filter((id) => id !== carId) : [...prev, carId],
-      );
-      if (already) {
-        const { error } = await supabase
-          .from("favorites")
-          .delete()
-          .eq("user_id", user.id)
-          .eq("car_id", carId);
-        if (error) {
-          // Откатить если ошибка
-          setIds((prev) => [...prev, carId]);
-        }
-      } else {
-        const { error } = await supabase
-          .from("favorites")
-          .insert({ user_id: user.id, car_id: carId });
-        if (error) {
-          setIds((prev) => prev.filter((id) => id !== carId));
-        }
-      }
-    },
-    [ids, user],
-  );
+  const toggle = useCallback((carId: string) => {
+    setIds((prev) =>
+      prev.includes(carId) ? prev.filter((id) => id !== carId) : [...prev, carId],
+    );
+  }, []);
 
-  const remove = useCallback(
-    async (carId: string) => {
-      if (!user || !ids.includes(carId)) return;
-      setIds((prev) => prev.filter((id) => id !== carId));
-      await supabase
-        .from("favorites")
-        .delete()
-        .eq("user_id", user.id)
-        .eq("car_id", carId);
-    },
-    [ids, user],
-  );
+  const remove = useCallback((carId: string) => {
+    setIds((prev) => prev.filter((id) => id !== carId));
+  }, []);
+
+  const clear = useCallback(() => setIds([]), []);
 
   return (
-    <FavoritesContext.Provider value={{ ids, loading, isFavorite, toggle, remove }}>
+    <FavoritesContext.Provider
+      value={{ ids, isFavorite, toggle, remove, clear, count: ids.length }}
+    >
       {children}
     </FavoritesContext.Provider>
   );
