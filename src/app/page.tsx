@@ -7,6 +7,7 @@ import { FavoriteButton } from "@/components/favorite-button";
 import { HeroSection } from "@/components/hero-section";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion-primitives";
 import { SiteHeader } from "@/components/site-header";
+import { TiltCard } from "@/components/tilt-card";
 import { BODY_LABELS, cars, formatPrice } from "@/lib/cars";
 import {
   ArrowUpRight,
@@ -147,6 +148,7 @@ export default function Home() {
           <Stagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {featured.map((m) => (
               <StaggerItem key={m.id}>
+                <TiltCard>
                 <Link href={`/catalog/${m.id}`}>
                   <Card className="group h-full overflow-hidden border-zinc-200/70 bg-white py-0 shadow-none transition hover:shadow-xl">
                     <div className="relative h-52 overflow-hidden bg-zinc-100">
@@ -171,6 +173,7 @@ export default function Home() {
                     </CardContent>
                   </Card>
                 </Link>
+                </TiltCard>
               </StaggerItem>
             ))}
           </Stagger>

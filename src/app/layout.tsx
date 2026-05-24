@@ -4,6 +4,7 @@ import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import { CompareBar } from "@/components/compare-bar";
 import { CompareProvider } from "@/lib/use-compare";
 import { FavoritesProvider } from "@/lib/use-favorites";
+import { LenisProvider } from "@/components/lenis-provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,12 +39,14 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <FavoritesProvider>
-          <CompareProvider>
-            {children}
-            <CompareBar />
-          </CompareProvider>
-        </FavoritesProvider>
+        <LenisProvider>
+          <FavoritesProvider>
+            <CompareProvider>
+              {children}
+              <CompareBar />
+            </CompareProvider>
+          </FavoritesProvider>
+        </LenisProvider>
       </body>
     </html>
   );

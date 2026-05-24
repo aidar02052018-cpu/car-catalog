@@ -17,6 +17,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CompareButton } from "@/components/compare-button";
 import { FavoriteButton } from "@/components/favorite-button";
+import { TiltCard } from "@/components/tilt-card";
 import { SiteHeader } from "@/components/site-header";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion-primitives";
 import { cn } from "@/lib/utils";
@@ -202,7 +203,8 @@ export default async function CarDetailPage({
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {similar.map((s) => (
-                <Link key={s.id} href={`/catalog/${s.id}`}>
+                <TiltCard key={s.id} maxTilt={6}>
+                <Link href={`/catalog/${s.id}`}>
                   <Card className="group overflow-hidden border-zinc-200/70 bg-white py-0 shadow-none transition hover:shadow-xl">
                     <div className="relative h-48 overflow-hidden bg-zinc-100">
                       <div
@@ -223,6 +225,7 @@ export default async function CarDetailPage({
                     </CardContent>
                   </Card>
                 </Link>
+                </TiltCard>
               ))}
             </div>
           </div>

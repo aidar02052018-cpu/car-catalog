@@ -13,6 +13,7 @@ import { SiteHeader } from "@/components/site-header";
 import { CompareButton } from "@/components/compare-button";
 import { FavoriteButton } from "@/components/favorite-button";
 import { Reveal } from "@/components/motion-primitives";
+import { TiltCard } from "@/components/tilt-card";
 import { motion } from "motion/react";
 import {
   Select,
@@ -266,6 +267,7 @@ export default function CatalogPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   >
+                  <TiltCard maxTilt={6}>
                   <Link href={`/catalog/${car.id}`}>
                     <Card className="group h-full overflow-hidden border-zinc-200/70 bg-white py-0 shadow-none transition hover:shadow-xl">
                       <div className="relative h-52 overflow-hidden bg-zinc-100">
@@ -304,6 +306,7 @@ export default function CatalogPage() {
                       </CardContent>
                     </Card>
                   </Link>
+                  </TiltCard>
                   </motion.div>
                 ))}
               </motion.div>
