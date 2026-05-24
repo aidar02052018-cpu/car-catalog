@@ -27,7 +27,6 @@ import {
   type CreditTerm,
 } from "@/lib/configurator";
 import { supabase, type LeadKind } from "@/lib/supabase";
-import { useAuth } from "@/lib/use-auth";
 import { isPhoneComplete, PhoneInput, toE164 } from "@/components/phone-input";
 import { AnimatedPrice } from "@/components/motion-primitives";
 
@@ -40,7 +39,6 @@ type SubmitState =
   | { mode: "error"; message: string };
 
 export function PriceCalculator({ car }: { car: Car }) {
-  const { user } = useAuth();
   const [trim, setTrim] = useState(TRIMS[0].id);
   const [color, setColor] = useState(COLORS[0].id);
   const [wheels, setWheels] = useState(WHEELS[0].id);
@@ -114,7 +112,6 @@ export function PriceCalculator({ car }: { car: Car }) {
       car_name: car.name,
       config,
       total_price: total,
-      user_id: user?.id ?? null,
     });
 
     if (error) {

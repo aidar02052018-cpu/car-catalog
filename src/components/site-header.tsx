@@ -13,7 +13,6 @@ import {
 import { Car, Heart, Menu, X } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
-import { UserMenu } from "@/components/user-menu";
 import { useFavorites } from "@/lib/use-favorites";
 import { cn } from "@/lib/utils";
 
@@ -135,10 +134,6 @@ export function SiteHeader({ variant = "solid" }: { variant?: Variant }) {
                 </span>
               )}
             </Link>
-
-            <div className="hidden md:block">
-              <UserMenu variant={effectiveTransparent ? "transparent" : "solid"} />
-            </div>
 
             <button
               type="button"

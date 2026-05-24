@@ -3,7 +3,6 @@ import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 
 import { CompareBar } from "@/components/compare-bar";
 import { CompareProvider } from "@/lib/use-compare";
-import { AuthProvider } from "@/lib/use-auth";
 import { FavoritesProvider } from "@/lib/use-favorites";
 import "./globals.css";
 
@@ -39,14 +38,12 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <AuthProvider>
-          <FavoritesProvider>
-            <CompareProvider>
-              {children}
-              <CompareBar />
-            </CompareProvider>
-          </FavoritesProvider>
-        </AuthProvider>
+        <FavoritesProvider>
+          <CompareProvider>
+            {children}
+            <CompareBar />
+          </CompareProvider>
+        </FavoritesProvider>
       </body>
     </html>
   );

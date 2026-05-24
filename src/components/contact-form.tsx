@@ -9,12 +9,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { isPhoneComplete, PhoneInput, toE164 } from "@/components/phone-input";
 import { supabase } from "@/lib/supabase";
-import { useAuth } from "@/lib/use-auth";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
 export function ContactForm() {
-  const { user } = useAuth();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
@@ -33,7 +31,6 @@ export function ContactForm() {
       name: name.trim(),
       phone: toE164(phone),
       message: message.trim() || null,
-      user_id: user?.id ?? null,
     });
 
     if (error) {
