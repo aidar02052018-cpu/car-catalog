@@ -29,6 +29,7 @@ import {
 import { supabase, type LeadKind } from "@/lib/supabase";
 import { isPhoneComplete, PhoneInput, toE164 } from "@/components/phone-input";
 import { AnimatedPrice } from "@/components/motion-primitives";
+import { SuccessAnimation } from "@/components/success-animation";
 
 type PaymentMode = "cash" | "credit";
 type SubmitState =
@@ -432,9 +433,7 @@ export function PriceCalculator({ car }: { car: Car }) {
 
         {submit.mode === "success" && (
           <div className="mt-5 flex flex-col items-center gap-3 rounded-2xl bg-white/5 p-6 text-center">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-zinc-900">
-              <Check className="h-5 w-5" />
-            </div>
+            <SuccessAnimation size={100} />
             <p className="font-heading text-xl">
               {submit.kind === "test_drive" ? "Записали на тест-драйв" : "Заявка принята"}
             </p>

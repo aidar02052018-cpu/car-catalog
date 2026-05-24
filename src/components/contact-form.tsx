@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { isPhoneComplete, PhoneInput, toE164 } from "@/components/phone-input";
+import { SuccessAnimation } from "@/components/success-animation";
 import { supabase } from "@/lib/supabase";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -48,9 +48,7 @@ export function ContactForm() {
   if (status === "success") {
     return (
       <div className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-white/10 bg-white/5 p-12 text-center backdrop-blur">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-zinc-900">
-          <Check className="h-5 w-5" />
-        </div>
+        <SuccessAnimation size={120} />
         <div>
           <p className="font-heading text-2xl">Заявка принята</p>
           <p className="mt-2 text-white/70">Менеджер перезвонит в течение 15 минут.</p>

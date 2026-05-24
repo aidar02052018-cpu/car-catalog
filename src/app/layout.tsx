@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
+import { ChatWidget } from "@/components/chat-widget";
 import { CompareBar } from "@/components/compare-bar";
 import { CompareProvider } from "@/lib/use-compare";
 import { FavoritesProvider } from "@/lib/use-favorites";
@@ -44,9 +48,12 @@ export default function RootLayout({
             <CompareProvider>
               {children}
               <CompareBar />
+              <ChatWidget />
             </CompareProvider>
           </FavoritesProvider>
         </LenisProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
