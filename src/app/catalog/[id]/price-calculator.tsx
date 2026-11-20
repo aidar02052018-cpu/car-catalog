@@ -26,7 +26,7 @@ import {
   WHEELS,
   type CreditTerm,
 } from "@/lib/configurator";
-import { supabase, type LeadKind } from "@/lib/supabase";
+import { submitLead, type LeadKind } from "@/lib/leads";
 import { isPhoneComplete, PhoneInput, toE164 } from "@/components/phone-input";
 import { AnimatedPrice } from "@/components/motion-primitives";
 import { SuccessAnimation } from "@/components/success-animation";
@@ -105,7 +105,7 @@ export function PriceCalculator({ car }: { car: Car }) {
     if (!name.trim() || !isPhoneComplete(phone)) return;
     setSubmit({ mode: "submitting" });
 
-    const { error } = await supabase.from("leads").insert({
+    await submitLead({
       kind,
       name: name.trim(),
       phone: toE164(phone),
@@ -114,11 +114,6 @@ export function PriceCalculator({ car }: { car: Car }) {
       config,
       total_price: total,
     });
-
-    if (error) {
-      setSubmit({ mode: "error", message: error.message });
-      return;
-    }
 
     setSubmit({ mode: "success", kind });
     setName("");
@@ -440,6 +435,7 @@ export function PriceCalculator({ car }: { car: Car }) {
             <p className="text-sm text-white/70">
               Менеджер перезвонит в течение 15 минут.
             </p>
+            <p className="text-xs text-white/45">Это демо-проект: заявка никуда не отправляется.</p>
             <button
               type="button"
               onClick={() => setSubmit({ mode: "idle" })}

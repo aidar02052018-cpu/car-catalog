@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { isPhoneComplete, PhoneInput, toE164 } from "@/components/phone-input";
 import { SuccessAnimation } from "@/components/success-animation";
-import { supabase } from "@/lib/supabase";
+import { submitLead } from "@/lib/leads";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -26,18 +26,12 @@ export function ContactForm() {
     setStatus("submitting");
     setErrorMsg("");
 
-    const { error } = await supabase.from("leads").insert({
+    await submitLead({
       kind: "contact",
       name: name.trim(),
       phone: toE164(phone),
       message: message.trim() || null,
     });
-
-    if (error) {
-      setStatus("error");
-      setErrorMsg(error.message);
-      return;
-    }
 
     setStatus("success");
     setName("");
@@ -52,6 +46,7 @@ export function ContactForm() {
         <div>
           <p className="font-heading text-2xl">Заявка принята</p>
           <p className="mt-2 text-white/70">Менеджер перезвонит в течение 15 минут.</p>
+          <p className="mt-3 text-xs text-white/45">Это демо-проект: заявка никуда не отправляется.</p>
         </div>
         <button
           type="button"
